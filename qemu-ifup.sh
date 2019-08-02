@@ -4,12 +4,11 @@ set -x
 switch=br0
 
 if [ -n "$1" ];then
-        #tunctl -u `whoami` -t $1
-        ip tuntap add $1 mode tap user `whoami`
+        tunctl -u `whoami` -t $1	# or `ip tuntap add $1 mode tap user `whoami``
         ip link set $1 up
         sleep 0.5s
-        brctl addif $switch $1
-        # ip link set $1 master $switch
+
+        brctl addif $switch $1		# or `ip link set dev $1 master $switch`
         exit 0
 else
         echo "Error: no interface specified"
